@@ -1,4 +1,4 @@
-const { verifyToken } = require("../utils/jwt");
+const { verifyToken } = require("../src/utils/jwt");
 const User = require("../models/user");
 
 async function ensureAuthenticated(req, res, next) {

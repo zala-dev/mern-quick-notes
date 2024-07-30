@@ -1,28 +1,26 @@
 require("dotenv").config();
-require("./config/db");
+require("./config/database");
 
 const express = require("express");
-const app = express();
-
-const logger = require("morgan");
 const path = require("path");
+const logger = require("morgan");
 const favicon = require("serve-favicon");
 
-const usersRoutes = require("./routes/users");
+const app = express();
+
+const usersRouter = require("./routes/users");
 
 app.use(logger("dev"));
 app.use(express.json());
 
 app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
-
 app.use(express.static(path.join(__dirname, "build")));
 
-app.use("/users", usersRoutes);
+app.use("/api/users", usersRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const port = process.env.DEV_PORT || 3001;
-
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));

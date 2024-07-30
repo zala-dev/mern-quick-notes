@@ -1,42 +1,40 @@
-const User = require("../models/");
-const { generateToken } = require("../utils/jwt");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-async function signup(req, res) {
+async function create(req, res) {
   try {
-    const { name, password } = req.body;
-
-    if (!name || !password) {
-      res.status(400).json({ error: "Please provide username and password" });
-    }
-
-    const user = new User({ name, password });
-    await user.save();
-
-    const token = generateToken(user);
-    res.status(201).json({ token, user });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const user = await User.create(req.body);
+    const token = await createJWT(user);
+    res.json(token);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
   }
+}
+
+function createJWT(user) {
+  return jwt.sign({ user }, process.env.SECRET, { expiresIn: "24h" });
 }
 
 async function login(req, res) {
   try {
-    const { name, password } = req.body;
-    const user = await User.findOne({ name });
-    const isPasswordMatch = await user.matchPassword(password);
+    const user = await User.findOne({ email: req.body.email });
 
-    if (!user || !isPasswordMatch) {
-      res.status(400).json({ error: "Invalid Credentials" });
+    if (!user) {
+      return res.status(400).json("Invalid email or password");
     }
+    const match = await bcrypt.compare(req.body.password, user.password);
 
-    const token = generateToken(user);
-    res.json({ token, user });
+    if (!match) {
+      return res.status(400).json("Invalid email or password");
+    }
+    const token = createJWT(user);
+    res.json(token);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json("Bad Credentials");
   }
 }
-
 module.exports = {
-  signup,
+  create,
   login,
 };

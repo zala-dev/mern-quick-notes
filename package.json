@@ -1,5 +1,5 @@
 {
-  "name": "mern-quick-notes",
+  "name": "quick-notes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -46,5 +46,6 @@
   },
   "devDependencies": {
     "ajv": "^8.17.1"
-  }
+  },
+  "proxy": "http://localhost:3001/"
 }
