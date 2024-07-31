@@ -2,8 +2,20 @@
 export default async function sendRequest(url, method = "GET", payload = null) {
   const options = { method };
 
+  // Add token to headers if available
+  const token = localStorage.getItem("token");
+  if (token) {
+    options.headers = {
+      ...options.headers,
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
   if (payload) {
-    options.headers = { "Content-Type": "application/json" };
+    options.headers = {
+      ...options.headers,
+      "Content-Type": "application/json",
+    };
     options.body = JSON.stringify(payload);
   }
 

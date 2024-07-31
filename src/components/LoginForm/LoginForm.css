@@ -1,0 +1,25 @@
+.form-container {
+  border: 1px solid rgba(0, 0, 0, 1);
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container form label:not(:first-child) {
+  margin-top: 20px;
+}
+
+.form-container form input {
+  padding: 5px 2px;
+}
+
+.form-container form button {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: -20px;
+}

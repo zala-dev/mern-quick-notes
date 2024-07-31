@@ -1,0 +1,13 @@
+.nav {
+  padding: 15px;
+  margin: 15px 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  font-size: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+}
+
+.nav-item {
+  color: yellow;
+}

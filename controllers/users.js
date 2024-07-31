@@ -19,7 +19,7 @@ function createJWT(user) {
 async function login(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email });
-
+    // console.log("Login User: ", user);
     if (!user) {
       return res.status(400).json("Invalid email or password");
     }
@@ -29,6 +29,7 @@ async function login(req, res) {
       return res.status(400).json("Invalid email or password");
     }
     const token = createJWT(user);
+    // console.log("Login: ", token);
     res.json(token);
   } catch (err) {
     res.status(400).json("Bad Credentials");

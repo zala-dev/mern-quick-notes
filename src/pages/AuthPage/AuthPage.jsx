@@ -7,7 +7,7 @@ export default function AuthPage({ setUser }) {
 
   return (
     <main>
-      <h1>AuthPage</h1>
+      <h1 className="main-heading">AuthPage</h1>
       <button onClick={() => setShowButton(!showButton)}>
         {!showButton ? "SIGN UP" : "LOG IN"}
       </button>
